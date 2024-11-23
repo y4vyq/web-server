@@ -15,10 +15,3 @@
 
 #### 注册界面示例
 ![注册界面示例](https://raw.githubusercontent.com/y4vyq/web-server/main/image/register.png)
-
----
-
-*接下来可以做的：*
-- [ ] 完善用户认证系统
-- [ ] 添加数据库支持
-- [ ] 设计并实现更多页面和功能
