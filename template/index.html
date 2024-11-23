@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站主页模板</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+        }
+        header {
+            width: 100%;
+            background-color: #3a4949;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        header .buttons {
+            margin-top: 10px;
+        }
+        header a {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 1rem;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+        header a:hover {
+            background-color: #218838;
+        }
+        main {
+            width: 90%;
+            max-width: 1200px;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        main h2 {
+            font-size: 1.8rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        main p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        footer {
+            width: 100%;
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: #f8f9fa;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>欢迎来到{{web_name}}网站</h1>
+        <div class="buttons">
+            <a href="{{ url_for('login') }}">登录</a>
+            <a href="{{ url_for('register') }}">注册</a>
+        </div>
+    </header>
+    <main>
+        <h2>这是主页内容</h2>
+        <p>你可以在这里添加网站的主要内容。这是一个现代化的页面布局，具有简洁的设计和友好的交互体验。</p>
+    </main>
+    <footer>
+        <p>&copy; 2023 我的网站. <a href="#">隐私政策</a> | <a href="#">联系我们</a></p>
+    </footer>
+</body>
+</html>
