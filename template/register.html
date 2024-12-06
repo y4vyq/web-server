@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>注册页面</title>
+    <title>用户注册</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <style>
-        /* Reset some default styles */
         * {
             margin: 0;
             padding: 0;
@@ -14,24 +14,24 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: url('https://img-s-msn-com.akamaized.net/tenant/amp/entityid/BB1msOOV.img') no-repeat center center fixed; /* 设置背景图片 */
-            background-size: cover; /* 确保图片覆盖整个屏幕 */
+            background: url('static/BB1msOOV.img') no-repeat center center fixed; /* 设置背景图片 */
+            background-size: cover; 
             height: 100vh;
             color: #333;
             display: flex;
-            justify-content: flex-start; /* 将登录框对齐到左边 */
+            justify-content: flex-start;
             align-items: center;
         }
 
         .login-container {
             display: flex;
-            justify-content: flex-start; /* 将内容对齐到左边 */
+            justify-content: flex-start; 
             width: 100%;
-            padding-left: 50px; /* 给左边留一些空隙 */
+            padding-left: 50px; 
         }
 
         .login-box {
-            background: rgba(255, 255, 255, 0.8); /* 设置背景透明，增加视觉效果 */
+            background: rgba(255, 255, 255, 0.8); 
             border-radius: 8px;
             padding: 40px;
             width: 350px;
@@ -65,19 +65,19 @@
         .input-group input {
             width: 100%;
             padding: 12px;
-            padding-top: 22px; /* To make space for the label */
+            padding-top: 22px; 
             border-radius: 4px;
             border: none;
             background: transparent;
             font-size: 14px;
             color: #333;
             transition: all 0.3s ease;
-            border-bottom: 2px solid #ddd; /* Keep only bottom border */
+            border-bottom: 2px solid #ddd;
         }
 
         .input-group input:focus {
             outline: none;
-            border-bottom: 2px solid #4A90E2; /* Focus effect on bottom border */
+            border-bottom: 2px solid #4A90E2; 
         }
 
         .input-group input:focus + label,
@@ -120,7 +120,6 @@
             text-decoration: underline;
         }
 
-        /* Flash messages styling */
         .alert {
             padding: 12px;
             margin-bottom: 20px;
