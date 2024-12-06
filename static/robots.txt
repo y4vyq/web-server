@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /private/
+Disallow: /temp/
+Disallow: /cgi-bin/
+Disallow: /search?
+
+User-agent: Slurp
+Disallow: /images/
+
+User-agent: Googlebot
+Allow: /public/
+Allow: /blog/

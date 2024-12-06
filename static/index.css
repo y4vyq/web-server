@@ -1,0 +1,160 @@
+/* 重置一些默认的浏览器样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, #85bbdf, #823c9e);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ddd;
+}
+
+header h1 {
+    margin: 0;
+    flex: 1;
+    text-align: left;
+}
+
+header nav {
+    display: flex;
+    gap: 1rem;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+header nav a:hover {
+    color: #ffd700;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+header img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+main {
+    padding: 2rem;
+    flex: 1;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+footer a {
+    color: #ffd700;
+    text-decoration: none;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #fff;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+
+    header h1 {
+        text-align: left;
+        margin-bottom: 1rem;
+    }
+
+    header nav {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    header nav a {
+        width: 100%;
+        text-align: left;
+    }
+
+    header img {
+        margin-top: 1rem;
+    }
+    .avatar-menu {
+        position: absolute;
+        top: 60px; /* 根据头像的高度调整 */
+        left: 0;
+        min-width: 150px;  /* 设置最小宽度 */
+        max-width: 400px;  /* 设置最大宽度 */
+        width: auto;      /* 宽度自动调整，但不超过最大宽度 */
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        padding: 10px 0;   /* 内边距，确保内容与边框之间有一些空间 */
+        z-index: 1000;
+        border-radius: 4px; /* 圆角 */
+    }
+}
+
+/* 头像容器和菜单样式 */
+.avatar-container {
+    position: relative; /* 这是必需的，以便绝对定位的菜单能够相对于它定位 */
+    display: inline-block; /* 确保容器只占据头像所需的宽度 */
+}
+
+.avatar-menu {
+    position: absolute;
+    top: 60px; /* 根据头像的高度调整 */
+    right: -10px; /* 设置右边距离为10px */
+    min-width: 150px;  /* 设置最小宽度 */
+    max-width: 400px;  /* 设置最大宽度 */
+    width: auto;      /* 宽度自动调整，但不超过最大宽度 */
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px 0;   /* 内边距，确保内容与边框之间有一些空间 */
+    z-index: 1000;
+    border-radius: 4px; /* 圆角 */
+}
+.avatar-menu a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 5px 10px; /* 给链接添加一些水平内边距，使文本不贴边 */
+    text-align: center; /* 使链接文本居中（如果需要的话） */
+}
+
+.avatar-menu a:hover {
+    background-color: #e0e0e0; /* 悬停时改变背景色以增强交互感 */
+}
