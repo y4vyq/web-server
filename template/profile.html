@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{username}}的个人中心</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="/static/profile.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <div class="avatar-container">
+                <img src="{{ avatar }}" alt="头像" id="avatar">
+            </div>
+            <ul class="menu">
+                <li>菜单项 1</li>
+                <li>菜单项 2</li>
+                <li>菜单项 3</li>
+                <!-- 可以添加更多菜单项 -->
+            </ul>
+            <button class="toggle-btn" id="toggleBtn">☰</button>
+        </div>
+        <div class="main-content">
+            <div class="user-info">
+                <h2>账号信息：</h2>
+                <p><strong>用户名：</strong>{{username}}</p>
+                <p><strong>上一次登录时间：</strong>{{last_login_time}}</p>
+                <p><strong>角色：</strong>
+                    {% if user_role == 1 %}
+                        访客
+                    {% elif user_role == 2 %}
+                        普通用户
+                    {% elif user_role == 3 %}
+                        管理员
+                    {% else %}
+                        未知角色
+                    {% endif %}
+                </p>
+            </div>
+            <div class="main-revise">
+                <h2>更改账户信息</h2>
+                <button class="revise-btn" id="chang-password">更改密码</button>
+                <button class="revise-btn" id="chang-avatar">更换头像</button>
+            </div>
+        </div>
+    </div>
+    <script src="static/profile.js"></script>
+</body>
+</html>
