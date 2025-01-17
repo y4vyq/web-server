@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <link rel="stylesheet" href="static/css/index.css">
+    <!-- 引入字体图标库（例如 Font Awesome，用于添加一些有趣的图标） -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="static/js/jquery-3.6.0.min.js"></script>
+    <!--<link rel="stylesheet" href="/static/css/swiper.min.css">-->
+    <script src="static/js/index.js"></script>
+    <script src="static/js/autoload.js"></script>
+</head>
+
+<body>
+    <header>
+        <!-- 顶部导航栏 -->
+        <nav class="navbar">
+            <div class="navbar-logo">
+                <img src="/static/favicon.ico" alt="网站logo" width="50" height="50">
+            </div>
+            <ul class="navbar-nav">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">关于我们</a></li>
+                <li><a href="#">联系我们</a></li>
+                <li><a href="#">反馈</a></li>
+            </ul>
+            <div class="navbar-icons">
+                <i class="fas fa-search"></i>
+                <i class="fas fa-bell"></i>
+                <i class="fas fa-user"></i>
+            </div>
+        </nav>
+        <nav>
+            {% if username %}
+            <div class="user-avatar-container">
+                <img src="{{ avatar }}" alt="用户头像" style="width:50px;height:50px;border-radius: 50%;">
+                <div class="user-avatar-menu" style="display: none;">
+                    <a href="{{ url_for('logout') }}">注销</a>
+                    <hr>
+                    <a href="{{ url_for('profile') }}">个人设置</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="guest-avatar-container">
+                <img src="/static/img/user.svg" alt="用户图标" width="50" height="50">
+                <div class="guest-avatar-menu" style="display: none;">
+                    <a href="{{ url_for('login') }}">登录</a>
+                    <p>测试用户：123，密码：123</p>
+                </div>
+            </div>
+            {% endif %}
+        </nav>
+    </header>
+    <main id="main-content">
+        <a href="/game/wuziqi" class="card-link">
+            <div class="card">
+                <img src="/static/img/xiyang-www.doubao.com.jpeg" alt="五子棋游戏" class="card-img">
+                <div class="card-text">
+                    <h3>五子棋</h3>
+                    <p>演示文本</p>
+                </div>
+            </div>
+        </a>
+        <a href="http://map.ziyoufh.top/" class="card-link">
+            <div class="card">
+                <img src="/static/img/minecraft-map.png" alt="我的世界服务器世界地图" class="card-img">
+                <div class="card-text">
+                    <h3>我的世界地图</h3>
+                    <p>演示文本</p>
+                </div>
+            </div>
+        </a>
+        <a href="{{ url_for('file') }}" class="card-link">
+            <div class="card">
+                <img src="/static/img/explore.jpg" alt="游戏文件管理" class="card-img">
+                <div class="card-text">
+                    <h3>文件管理系统</h3>
+                    <p>演示文本</p>
+                </div>
+            </div>
+        </a>
+    </main>
+
+<!-- 新增可扩展模块区域 2025/1/12 
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">Slide 1</div>
+            <div class="swiper-slide">Slide 2</div>
+            <div class="swiper-slide">Slide 3</div>
+        </div>
+
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <script src="/static/js/swiper.min.js"></script>
+
+
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            direction: 'vertical'
+        });
+        </script>
+        -->
+    <footer>
+        <data>&copy; 2023 ziyoufh.top</data> | <a href="#">隐私政策</a> | <a href="http://github.com/y4vyq/web-server">联系我们（github）</a>
+    </footer>
+</body>
+
+</html>

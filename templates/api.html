@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API 文档</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    h1 {
+        text-align: center;
+    }
+    .container {
+        display: flex;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    .sidebar {
+        flex: 1;
+        padding-right: 20px;
+        border-right: 1px solid #ccc;
+    }
+    .main-content {
+        flex: 2;
+        padding-left: 20px;
+    }
+    .index {
+        margin-bottom: 20px;
+    }
+    .index ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    .index li {
+        margin-bottom: 5px;
+    }
+    .section {
+        margin-top: 20px;
+    }
+    .api-name {
+        font-size: 20px;
+        margin-top: 0;
+    }
+    .api-description {
+        margin-top: 10px;
+        line-height: 1.6;
+    }
+	    .section {
+        margin-top: 20px;
+    }
+    .code {
+        background-color: #f0f0f0;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+	.breadcrumb {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: #007bff; /* Bootstrap 蓝色 */
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+</style>
+</head>
+<body>
+    <div class="breadcrumb">您当前的位置：<a href="/">首页</a> > <a href="/profile">个人主页</a> > <a href="/api">api文档</a></div>
+    <div class="container">
+        <div class="sidebar">
+            <div class="index">
+                <h3>API 文档 - 索引</h3>
+                <ul>
+                    <li><a href="#apibackground-image">API:随机背景图片</a></li>
+                    <li><a href="#apiadd_user">API:添加用户</a></li>
+                    <!--<li><a href="#api3">API 3</a></li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="main-content">
+            <h1>API 文档 - 正文</h1>
+            <hr />
+            <div id="apibackground-image" class="section">
+                <h2>API:background-image</h2>
+                <h2>API 简介：获取随机背景图片</h2>
+                <p>端点：/api/background-image</p>
+
+                <h3>请求类型: GET</h3>
+
+                <h3>参数</h3>
+                <ul>
+                    <!-- <li><strong>username</strong>（必填）- 用户名。</li> -->
+                    <li><strong></strong>无需传入任何参数。</li>
+                </ul>
+
+                <h3>请求</h3>
+                <p>GET /api/background-image</p>
+                <div class="code">
+                    <pre>{
+	GET /api/background-image HTTP/1.1
+	Host: your-api-domain
+}</pre>
+                </div>
+                <p>请将 your-api-domain 替换为实际部署该 API 的域名或 IP 地址。</p>
+                <h3>成功响应</h3>
+                <div class="code">
+                    <pre>{
+	HTTP/1.1 200 OK
+	Content-Type: [image content type]
+	Content-Length: [size in bytes]
+
+	[image data]
+
+}</pre>
+                </div>
+                <h3>失败响应</h3>
+                <div class="code">
+                    <pre>{
+	HTTP/1.1 404 Not Found
+	Content-Type: text/plain
+	No images available
+}</pre>
+                </div>
+				<h3>备注</h3>
+                <p>这个 API 允许客户端获取一个随机的背景图片。客户端通过向 /api/background-image 发送 GET 请求来获取图片数据。如果有可用的图片，将返回 HTTP 状态码 200 和相应的图片数据；如果没有可用的图片，则返回 HTTP 状态码 404 和消息 "No images available"。</p>
+            </div>
+<hr />
+<hr />
+    <div id="apiadd_user" class="section">
+        <h2>API 简介：添加用户</h2>
+        <p>端点：POST /add_user</p>
+        
+        <h3>权限要求</h3>
+        <ul>
+            <li>需要管理员权限。</li>
+            <li>会话中的 IP 地址将被检查以确保安全性。</li>
+        </ul>
+        
+        <h3>请求参数</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>参数</th>
+                    <th>类型</th>
+                    <th>描述</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>username</td>
+                    <td>字符串</td>
+                    <td>新用户的用户名。</td>
+                </tr>
+                <tr>
+                    <td>password</td>
+                    <td>字符串</td>
+                    <td>新用户的密码。</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>成功响应</h3>
+        <div class="code">
+            <pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "message": "用户添加成功。"
+}
+            </pre>
+        </div>
+        
+        <h3>错误响应</h3>
+        <div class="code">
+            <pre>
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "error": "用户名和密码不能为空。"
+}
+            </pre>
+            <pre>
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+    "error": "用户名已存在。"
+}
+            </pre>
+        </div>
+        
+        <h3>备注</h3>
+        <p>该接口用于管理员添加新用户到系统中。如果用户名或密码未提供或者用户名已存在，将返回相应的错误消息。</p>
+    </div>
+</div>
+
+
+            <!--<div id="api3" class="section">
+                <h2 class="api-name">API 3</h2>
+                <p class="api-description">这是 API 3 的描述。可以在这里添加更多关于 API 3 的详细说明。</p>
+            </div>-->
+        </div>
+    </div>
+</body>
+</html>

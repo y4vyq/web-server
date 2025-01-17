@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户注册</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('static/img/BB1msOOV.img') no-repeat center center fixed; /* 设置背景图片 */
+            background-size: cover; /* 确保图片覆盖整个屏幕 */
+            height: 100vh;
+            color: #333;
+            display: flex;
+            justify-content: flex-start; /* 将登录框对齐到左边 */
+            align-items: center;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: flex-start; /* 将内容对齐到左边 */
+            width: 100%;
+            padding-left: 50px; /* 给左边留一些空隙 */
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.8); /* 设置背景透明，增加视觉效果 */
+            border-radius: 8px;
+            padding: 40px;
+            width: 350px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            color: #666;
+            position: absolute;
+            top: 16px;
+            left: 12px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            padding-top: 22px; /* To make space for the label */
+            border-radius: 4px;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            color: #333;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid #ddd; /* Keep only bottom border */
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-bottom: 2px solid #4A90E2; /* Focus effect on bottom border */
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: -10px; /* Move the label up */
+            left: 12px;
+            font-size: 12px;
+            color: #4A90E2;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: #4A90E2;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background-color: #357ABD;
+        }
+
+        .extra-links {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .extra-links a {
+            color: #4A90E2;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Flash messages styling */
+        .alert {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            background-color: #F44336;
+            color: white;
+            font-size: 14px;
+            justify-content: center;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="login-container">
+
+        <div class="login-box">
+            <h2>注册</h2>
+            <div class="alert" id="alert-message" style="display:none;"></div>
+            <!-- 注册表单 -->
+            <form id="register-form">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder=" " required>
+                    <label for="username">用户名</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" placeholder=" " required>
+                    <label for="password">密码</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="confirm-password" placeholder=" " required>
+                    <label for="confirm-password">确认密码</label>
+                </div>
+
+                <button type="submit" class="btn-login">注册</button>
+            </form>
+
+            <div class="extra-links">
+                <a href="login">已有账号? 去登录</a>
+                <a href="#">忘记密码?</a>
+            </div>
+        </div>
+    </div>
+    <script>
+document.getElementById('register-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    // 检查密码是否匹配
+    if (password !== confirmPassword) {
+        displayAlert('密码不一致，请重新输入。', 'error');
+        return;
+    }
+
+    // 创建请求体
+    const data = {
+        username: username,
+        password: password
+    };
+
+    // 发送POST请求
+    fetch('/api/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message) {
+            // 显示注册成功的消息
+            displayAlert(data.message, 'success');
+            // 如果注册成功并登录，跳转到主页
+            if (data.message === "用户注册并登录成功！") {
+                setTimeout(function() {
+                    window.location.href = '/';  // 跳转到主页
+                }, 1500);  // 等待1.5秒后跳转，给用户一些时间看到成功消息
+            }
+        } else if (data.error) {
+            displayAlert(data.error, 'error');
+        }
+    })
+    .catch(error => {
+        displayAlert('注册过程中出现错误，请稍后再试。', 'error');
+    });
+});
+
+function displayAlert(message, type) {
+    const alertBox = document.getElementById('alert-message');
+    alertBox.textContent = message;
+    alertBox.style.display = 'block';
+
+    if (type === 'success') {
+        alertBox.style.backgroundColor = '#4CAF50';
+        alertBox.style.color = 'white';
+    } else {
+        alertBox.style.backgroundColor = '#F44336';
+        alertBox.style.color = 'white';
+    }
+}
+
+    </script>
+</body>
+</html>

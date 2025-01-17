@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>五子棋</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+  .board-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      background-color: #fff;
+      padding: 20px;
+    }
+
+    canvas {
+      border: 2px solid #ccc;
+      background-color: #f8f8f8;
+      border-radius: 5px;
+    }
+
+    #message {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="board-container">
+    <div class="board">
+      <canvas id="chessBoard" width="600" height="600"></canvas>
+    </div>
+    <p id="message">黑方先行</p>
+  </div>
+  <button id="restartButton">重新开始</button>
+  <script>
+    const canvas = document.getElementById('chessBoard');
+    const ctx = canvas.getContext('2d');
+
+    const boardSize = 15;
+    const cellSize = 40;
+    const radius = 15;
+
+    let currentPlayer = 'black';
+    let board = [];
+
+    function initBoard() {
+      board = [];
+      for (let i = 0; i < boardSize; i++) {
+        board[i] = [];
+        for (let j = 0; j < boardSize; j++) {
+          board[i][j] = null;
+        }
+      }
+    }
+
+    function drawBoard() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = "#ccc";
+      ctx.lineWidth = 2;
+      for (let i = 0; i < boardSize; i++) {
+        ctx.beginPath();
+        ctx.moveTo(cellSize / 2, (i + 0.5) * cellSize);
+        ctx.lineTo((boardSize - 0.5) * cellSize, (i + 0.5) * cellSize);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo((i + 0.5) * cellSize, cellSize / 2);
+        ctx.lineTo((i + 0.5) * cellSize, (boardSize - 0.5) * cellSize);
+        ctx.stroke();
+      }
+
+      // 绘制正确位置的 9 个小圆点（天元及周围的星位）
+      const starPoints = [
+        { row: 3, col: 3 },
+        { row: 3, col: 7 },
+        { row: 3, col: 11 },
+        { row: 7, col: 3 },
+        { row: 7, col: 7 },
+        { row: 7, col: 11 },
+        { row: 11, col: 3 },
+        { row: 11, col: 7 },
+        { row: 11, col: 11 }
+      ];
+      ctx.beginPath();
+      ctx.strokeStyle = '#ccc';
+      ctx.lineWidth = 1;
+      ctx.fillStyle = '#ccc';
+      for (const point of starPoints) {
+        const x = (point.col + 0.5) * cellSize;
+        const y = (point.row + 0.5) * cellSize;
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+    }
+
+    function drawPieces() {
+      for (let i = 0; i < boardSize; i++) {
+        for (let j = 0; j < boardSize; j++) {
+          if (board[i][j] === 'black') {
+            drawPiece(i, j, 'black');
+          } else if (board[i][j] === 'white') {
+            drawPiece(i, j, 'white');
+          }
+        }
+      }
+    }
+
+    // 绘制单个棋子
+    function drawPiece(x, y, color) {
+      const centerX = (x + 0.5) * cellSize;
+      const centerY = (y + 0.5) * cellSize;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.strokeStyle = '#ccc';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    function checkWin(player) {
+      const directions = [
+        // 横向
+        { dx: 0, dy: 1 },
+        // 纵向
+        { dx: 1, dy: 0 },
+        // 正斜向
+        { dx: 1, dy: 1 },
+        // 反斜向
+        { dx: -1, dy: 1 }
+      ];
+      for (const dir of directions) {
+        for (let row = 0; row < boardSize; row++) {
+          for (let col = 0; col < boardSize; col++) {
+            if (board[row][col] === player) {
+              let count = 1;
+              // 向右下方向检查
+              let r = row + dir.dy;
+              let c = col + dir.dx;
+              while (r < boardSize && c < boardSize && board[r][c] === player) {
+                count++;
+                r += dir.dy;
+                c += dir.dx;
+              }
+              // 向左上方向检查
+              r = row - dir.dy;
+              c = col - dir.dx;
+              while (r >= 0 && c >= 0 && board[r][c] === player) {
+                count++;
+                r -= dir.dy;
+                c -= dir.dx;
+              }
+              if (count >= 5) {
+                const message = document.getElementById('message');
+                message.textContent = `${player === 'black'? '黑方' : '白方'}获胜！`;
+                // 5 秒后重置棋盘
+                setTimeout(() => {
+                  restartGame();
+                }, 5000);
+                return true;
+              }
+            }
+          }
+        }
+      }
+      return false;
+    }
+
+    function restartGame() {
+      initBoard();
+      drawBoard();
+      drawPieces();
+      currentPlayer = 'black';
+      const message = document.getElementById('message');
+      message.textContent = '黑方先行';
+    }
+
+    canvas.addEventListener('click', function (e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.floor((e.clientX - rect.left) / cellSize);
+      const y = Math.floor((e.clientY - rect.top) / cellSize);
+
+      if (board[x][y] === null) {
+        board[x][y] = currentPlayer;
+        drawBoard();
+        drawPieces();
+
+        if (checkWin(currentPlayer)) {
+          // 不再绘制胜利连线，仅显示获胜信息和处理重置逻辑
+        } else {
+          currentPlayer = currentPlayer === 'black'? 'white' : 'black';
+          const message = document.getElementById('message');
+          message.textContent = currentPlayer === 'black'? '黑方先行' : '白方先行';
+        }
+      }
+    });
+
+    const restartButton = document.getElementById('restartButton');
+    restartButton.addEventListener('click', restartGame);
+
+    // 初始化棋盘
+    initBoard();
+    drawBoard();
+    drawPieces();
+  </script>
+</body>
+
+</html>

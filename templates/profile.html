@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ username }}的个人中心</title>
+    <link rel="icon" href="{{avatar}}">
+    <!-- 引入样式表 -->
+    <link rel="stylesheet" href="static/css/profile.css">
+    <link rel="stylesheet" href="static/css/cropper.min.css">
+    <link rel="stylesheet" href="static/css/avatar.modal.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar" id="sidebar">
+            <div class="avatar-container">
+                <img src="{{ avatar }}" alt="用户头像" id="avatar">
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href ="/" id="index-btn">首页</a></li>
+                    <li><a href ="/file">文件管理</a></li>
+                    <li>菜单三</li>
+                    <li>菜单四</li>
+                    <li><a href="#logout" id="logout-btn">登出</a></li>
+                </ul>
+            </nav>
+            <button class="toggle-btn" id="toggleBtn">☰</button>
+        </aside>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 用户信息区 -->
+            <section id="user-info" class="user-info">
+                <h2>账号信息</h2>
+                <p><strong>用户名：</strong>{{ username }}</p>
+                <p><strong>上一次登录时间：</strong>{{ last_login_time }}</p>
+                <p><strong>上次登录的IP：</strong>{{ last_login_ip }}</p>
+                <p><strong>角色：</strong>
+                    {% if user_role == 1 %}
+                        访客
+                    {% elif user_role == 2 %}
+                        普通用户
+                    {% elif user_role == 3 %}
+                        管理员
+                    {% else %}
+                        未知角色
+                    {% endif %}
+                </p>
+            </section>
+
+            <!-- 更改账户信息 -->
+            <section id="account-settings" class="main-revise">
+                <h2>更改账户信息</h2>
+                <button class="revise-btn" id="change-avatar">更换头像</button>
+                <a href="/change_password">更改密码</a>
+            </section>
+        </main>
+    </div>
+
+    <!-- 裁剪头像模态框 -->
+    <div id="cropper-modal" class="modal" style="display: none;">
+        <div id="modal-content">
+            <div class="upload-crop-section">
+                <h2>上传并裁剪头像</h2>
+                <div id="drag-drop-area" class="drag-drop-area">
+                    <p>将图片拖到这里上传</p>
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                </div>
+                <div id="image-container" class="image-container" style="display: none;">
+                    <img id="image" src="" alt="待裁剪图片" class="image-to-crop">
+                </div>
+            </div>
+            <div class="preview-submit-section">
+                <h2>裁剪预览</h2>
+                <img id="preview-image" src="" alt="裁剪后的图片预览" class="preview-image">
+                <button id="submit-btn" class="submit-btn" style="display: none;">提交裁剪图片</button>
+                <button id="cancel-btn" class="cancel-btn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var flaskVars = {
+            username: `{{ username }}`
+        };
+        // 退出功能
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            window.location.href = "/logout";  // 实际路径应由后端控制
+        });
+    </script>
+
+    <script src="static/js/cropper.min.js"></script>
+    <script src="static/js/avatar.cropper.js"></script>
+    <script src="static/js/profile.js"></script>
+</body>
+</html>

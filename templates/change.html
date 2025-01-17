@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>头像更新</title>
+    <link rel="stylesheet" href="static/cropper.min.css">
+    <style>
+        #image-container {
+            max-width: 100%;
+            text-align: center;
+        }
+        #image {
+            max-width: 100%;
+        }
+        #submit-btn {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>上传并裁剪头像</h1>
+    
+    <input type="file" id="imageInput" accept="image/*">
+    
+    <div id="image-container" style="display:none;">
+        <img id="image" src="" alt="裁剪图片">
+    </div>
+    
+    <button id="submit-btn" style="display:none;">提交裁剪图片</button>
+    
+    <script src="static/cropper.min.js"></script>
+    <script>
+        let cropper;  // 保存 cropper 实例
+        const imageInput = document.getElementById('imageInput');
+        const imageContainer = document.getElementById('image-container');
+        const submitButton = document.getElementById('submit-btn');
+        const imageElement = document.getElementById('image');
+
+        // 图片上传事件
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imageElement.src = e.target.result;
+                    imageContainer.style.display = 'block';
+                    submitButton.style.display = 'inline-block';
+
+                    // 初始化 Cropper
+                    if (cropper) {
+                        cropper.destroy();  // 销毁旧的 cropper 实例
+                    }
+                    cropper = new Cropper(imageElement, {
+                        aspectRatio: 1, // 保持正方形裁剪
+                        viewMode: 1,    // 显示图片的裁剪区域
+                        dragMode: 'move',  // 移动图片
+                        cropBoxResizable: true,
+                        cropBoxMovable: true
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 提交裁剪后的图片
+        submitButton.addEventListener('click', function() {
+            const canvas = cropper.getCroppedCanvas({
+                width: 64,
+                height: 64
+            });
+
+            // 将裁剪后的图片转为 Base64 编码
+            const base64Image = canvas.toDataURL();
+
+            // 发送 POST 请求到后端
+            fetch('/update-avatar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: '{{username}}',
+                    avatar: base64Image
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('消息: ' + data.message);
+            })
+            .catch(error => {
+                console.error('请求失败:', error);
+                alert('上传失败，请稍后再试');
+            });
+        });
+    </script>
+</body>
+</html>

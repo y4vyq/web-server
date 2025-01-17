@@ -1,0 +1,209 @@
+/*导入字体*/
+@font-face {
+    font-family: 'xinkai';
+    src: url('/static/fonts/xinkai.ttf') format('truetype');  
+    font-weight: normal;
+    font-style: normal;
+}
+/* 基本全局样式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #ecf0f1; /* 调整为更柔和的背景色 */
+    color: #2c3e50; /* 全局文字颜色 */
+}
+
+/* 容器布局，侧边栏与主内容 */
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden; /* 防止内容溢出 */
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    width: 250px;
+    height: 100%;
+    background: linear-gradient(135deg, #85bbdf, #823c9e);
+    color: white;
+    transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* 侧边栏折叠 */
+.sidebar.collapsed {
+    width: 60px;
+    padding: 10px 5px;
+}
+
+/* 隐藏菜单项 */
+.sidebar.collapsed .menu {
+    visibility: hidden; /* 你也可以用 display: none; */
+}
+
+/* 菜单样式 */
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+/* 头像区域 */
+.avatar-container {
+    text-align: center;
+    padding: 20px 0;
+    transition: padding 0.3s ease-in-out;
+}
+
+.sidebar.collapsed .avatar-container {
+    padding: 10px 0;
+}
+
+.avatar-container img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+    object-fit: cover; /* 确保图片正确填充 */
+}
+
+.sidebar.collapsed .avatar-container img {
+    width: 40px;
+    height: 40px;
+}
+
+/* 菜单样式 */
+.menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.menu li {
+	/*padding: 15px 20px;*/
+    font-family: sans-serif;
+    font-size: 16px; /* 增大字体 */
+    line-height: 24px; /* 调整行高 */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, padding-left 0.3s ease-in-out;
+}
+
+.menu li:hover {
+    background-color: #ffffff00; /* 更深的背景色 */
+    padding-left: 30px; /* Hover时增加左侧内边距 */
+}
+
+.menu li:a {
+	/*padding: 15px 20px;*/
+    font-family: sans-serif;
+    font-size: 16px; /* 增大字体 */
+    line-height: 24px; /* 调整行高 */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, padding-left 0.3s ease-in-out;
+}
+
+/* 菜单项选中状态 */
+.menu li.active {
+    background-color: #ffffff00;
+    color: #ecf0f1; /* 选中时文字颜色变浅 */
+    padding-left: 30px; /* 强化选中时的左侧内边距 */
+    font-weight: bold; /* 加粗字体 */
+}
+
+/* 切换按钮 */
+.toggle-btn {
+    background-color: #ffffff00; /* 与侧边栏背景色相同 */
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%; /* 使按钮宽度与侧边栏一致 */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 16px; /* 增大字体 */
+    transition: padding 0.3s ease-in-out;
+}
+
+.sidebar.collapsed .toggle-btn {
+    padding: 15px 0;
+    text-align: center; /* 折叠时文字居中 */
+}
+
+/* 信息内容区域 */
+.main-content {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #f9f9f9; /* 柔和的背景色 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 盒子阴影 */
+    border-left: 1px solid #ddd; /* 左侧边框，与侧边栏分隔 */
+    font-size: 20px; /* 字体大小 */
+    line-height: 1.5; /* 行高 */
+    transition: margin-left 0.3s ease-in-out, background-color 0.3s ease-in-out; /* 过渡效果 */
+}
+/*更改信息区域*/
+.main-revise{
+    flex-grow: 1;
+    padding: 30px;
+    background: linear-gradient(135deg, #a9df85, #9e3c7d);
+    color: rgba(255, 255, 255, 50);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 盒子阴影 */
+    border-left: 1px solid #ddd; /* 左侧边框，与侧边栏分隔 */
+    font-size: 20px; 
+    line-height: 1.5; /* 行高 */
+    transition: margin-left 0.3s ease-in-out, background-color 0.3s ease-in-out; /* 过渡效果 */
+}
+
+/* 侧边栏展开时，主内容区域向右推 */
+.sidebar + .main-content {
+    margin-left: 0px; /* 确保与侧边栏宽度一致 */
+}
+
+.sidebar.collapsed + .main-content {
+    margin-left: 0px; /* 折叠时调整主内容区域边距 */
+}
+
+
+/* 响应式设计：当屏幕宽度较小时，侧边栏折叠 */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* 缩小侧边栏宽度 */
+    }
+
+    .sidebar.collapsed {
+        width: 60px;
+    }
+
+    .main-content {
+        padding: 20px; /* 在小屏幕上减少内边距 */
+        font-size: 14px; /* 在小屏幕上减小字体大小 */
+    }
+
+    .toggle-btn {
+        font-size: 18px; /* 增大按钮字体 */
+    }
+
+    .sidebar + .main-content {
+        margin-left: 0px; /* 确保与侧边栏新宽度一致 */
+    }
+
+    .sidebar.collapsed + .main-content {
+        margin-left: 0px; /* 折叠时保持主内容区域边距 */
+    }
+}

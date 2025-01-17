@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"="width=device-width, initial-scale=1.0">
+    <title>{{ username }}的文件管理</title>
+    <link rel="icon" href="{{avatar}}">
+    <!-- 引入样式表 -->
+    <link rel="stylesheet" href="static/css/file.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <aside class="sidebar" id="sidebar">
+            <div class="avatar-container">
+                <img src="{{ avatar }}" alt="用户头像" id="avatar">
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="/" id="index-btn">首页</a></li>
+                    <li><a href="/profile">个人中心</a></li>
+                    <li>菜单三</li>
+                    <li>菜单四</li>
+                    <li><a href="/logout" id="logout-btn">登出</a></li>
+                </ul>
+            </nav>
+            <button class="toggle-btn" id="toggleBtn">☰</button>
+        </aside>
+        <!-- 主内容区域 -->
+
+            <!-- 文件操作区模态框 -->
+            <div id="uploadModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <section id="file-operations" class="main-revise">
+                        <h2>文件操作</h2>
+                        <!-- 文件上传表单 -->
+                        <form id="upload-form">
+                            <input type="file" name="file" id="file-input">
+                            <button type="submit">上传文件</button>
+                        </form>
+                        <!-- 上传进度相关元素 -->
+                        <div id="progress-container">
+                            <progress id="upload-progress" max="100" value="0"></progress>
+                            <span id="progress-percentage">0%</span>
+                            <span id="upload-rate"></span>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- 文件列表展示区域 -->
+            <section id="file-list-section" class="main-revise">
+                <div id="errorMessageContainer"></div>
+                <h2>
+                    <b>我的文件</b>
+                    <button class="upload" id="openModalBtn">
+                        <img src="/static/img/upload.svg" alt="上传" width="20" height="20">
+                    </button>
+                </h2>
+                <ul id="file-list">
+                    <!-- 这里将通过JavaScript动态填充文件列表项 -->
+                </ul>
+            </section>
+
+    </div>
+    <script src="static/js/file.js"></script>
+</body>
+
+</html>

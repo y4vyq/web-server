@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户登录</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('static/img/BB1msOOV.img') no-repeat center center fixed; /* 设置背景图片 */
+            background-size: cover; /* 确保图片覆盖整个屏幕 */
+            height: 100vh;
+            color: #333;
+            display: flex;
+            justify-content: flex-start; /* 将登录框对齐到左边 */
+            align-items: center;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: flex-start; /* 将内容对齐到左边 */
+            width: 100%;
+            padding-left: 50px; /* 给左边留一些空隙 */
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.8); /* 设置背景透明，增加视觉效果 */
+            border-radius: 8px;
+            padding: 40px;
+            width: 350px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            color: #666;
+            position: absolute;
+            top: 16px;
+            left: 12px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            padding-top: 22px; /* To make space for the label */
+            border-radius: 4px;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            color: #333;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid #ddd; /* Keep only bottom border */
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-bottom: 2px solid #4A90E2; /* Focus effect on bottom border */
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: -10px; /* Move the label up */
+            left: 12px;
+            font-size: 12px;
+            color: #4A90E2;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: #4A90E2;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background-color: #357ABD;
+        }
+
+        .extra-links {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .extra-links a {
+            color: #4A90E2;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Flash messages styling */
+        .alert {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            background-color: #F44336;
+            color: white;
+            font-size: 14px;
+            justify-content: center;
+        }
+
+        .alert.success {
+            background-color: #4CAF50;
+        }
+
+        .alert i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+		.avatar-container {
+			width: 80px;
+			height: 80px;
+			border-radius: 50%;
+			overflow: hidden;
+			margin: 0 auto 20px; /* 居中并与下面的元素保持间距 */
+		}
+
+		.avatar-img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+		.alert {
+			padding: 12px;
+			margin-bottom: 20px;
+			border-radius: 6px;
+			display: flex;
+			align-items: center;
+			font-size: 14px;
+			justify-content: center;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.alert.success {
+			background-color: #4CAF50; /* 成功的绿色 */
+		}
+
+		.alert.error {
+			background-color: #F44336; /* 错误的红色 */
+		}
+
+		.alert i {
+			margin-right: 10px;
+			font-size: 18px;
+		}
+@media (max-width: 768px) {
+    .login-box {
+        width: 80%;
+        padding: 20px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>登录</h2>
+            
+            <!-- 头像容器 -->
+            <div class="avatar">
+                <div class="avatar-container">
+                    <img id="user-avatar" class="avatar-img" src="/static/OIP-C.jpg" alt=" ">
+                </div>
+            </div>
+            
+            <!-- 错误消息提示框 -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="alert {{ messages[0][1] }}">
+                        <i class="fa">&#x26A0;</i> {{ messages[0][0] }}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- 登录表单 -->
+            <form method="POST" action="{{ url_for('api_login') }}">
+                <div class="input-group">
+                    <input type="text" id="username" name="username" placeholder=" " required>
+                    <label for="username">用户名</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">密码</label>
+                </div>
+
+                <button type="submit" class="btn-login">登录</button>
+
+                <div class="extra-links">
+                    <a href="#">忘记密码?</a>
+                    <a href="register">没有用户？注册新账号</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const avatarImg = document.getElementById('user-avatar');
+    
+    // 输入框聚焦和失焦效果
+    usernameInput.addEventListener('focus', function() {
+        usernameInput.style.backgroundColor = '#fafafa';
+    });
+
+    usernameInput.addEventListener('blur', function() {
+        usernameInput.style.backgroundColor = '';
+
+        // 获取输入框中的用户名
+        const username = usernameInput.value.trim();
+        
+        // 如果用户名不为空，发送请求获取头像数据
+        if (username) {
+            fetch(`/api/avatar/${username}`)  // 请求头像接口
+                .then(response => response.json())  // 获取 JSON 格式数据
+                .then(data => {
+                    if (data.avatar_base64) {  // 判断返回的头像数据是否存在
+                        avatarImg.src = data.avatar_base64;  // 设置头像
+                    } else {
+                        console.error('未知用户名或用户没有头像数据');
+                        // 如果没有头像数据，使用默认头像
+                        avatarImg.src = '/static/OIP-C.jpg';  // 默认头像路径
+                    }
+                })
+                .catch(error => {
+                    console.error('获取头像失败:', error);
+                    // 请求失败时使用默认头像
+                    avatarImg.src = '/static/OIP-C.jpg';  // 默认头像路径
+                });
+        } else {
+            console.log('请输入有效的用户名');
+            // 如果用户名为空，清空头像
+            avatarImg.src = '';  // 清空头像显示
+        }
+    });
+
+    passwordInput.addEventListener('focus', function() {
+        passwordInput.style.backgroundColor = '#fafafa';
+    });
+
+    passwordInput.addEventListener('blur', function() {
+        passwordInput.style.backgroundColor = '';
+    });
+});
+
+
+    // 模拟头像加载完成后的过渡
+    window.onload = function() {
+        var avatar = document.getElementById('user-avatar');
+        avatar.onload = function() {
+            avatar.classList.add('loaded'); // 头像加载完成后，添加动画
+        };
+        // 如果头像资源已加载完成，可以直接触发
+        if (avatar.complete) {
+            avatar.classList.add('loaded');
+        }
+    };
+</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+/* Avatar Modal 样式 */
+#cropper-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    display: flex;  /* 使用Flexbox来居中对齐 */
+}
+
+#modal-content {
+    background: #fff;
+    display: flex;  /* 使用Flexbox实现左右排列 */
+    width: 90%;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.upload-crop-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;  /* 设置为模态框的一半宽度 */
+    padding-right: 10px;  /* 为了左侧与右侧有间距 */
+}
+
+#drag-drop-area {
+    margin: 20px 0;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#drag-drop-area p {
+    color: #777;
+    font-size: 16px;
+}
+
+.image-container {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.image-to-crop {
+    width: 100%;
+    max-height: 400px;
+}
+
+.preview-submit-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.preview-image {
+    width: 100%;
+    max-height: 200px;
+    margin-bottom: 20px;
+}
+
+.submit-btn, .cancel-btn {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+}
+
+.submit-btn {
+    background-color: #28a745;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+}
+
+.submit-btn:hover {
+    background-color: #218838;
+}
+
+.cancel-btn:hover {
+    background-color: #c82333;
+}
+
+/* 右侧区域 */
+#cropper-preview {
+    width: 50%;  /* 设置为模态框的一半宽度 */
+    padding-left: 10px;  /* 右侧与左侧有间距 */
+}
+
+.preview-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+}
