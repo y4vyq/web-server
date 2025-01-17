@@ -86,7 +86,7 @@
 5. 在GitHub上创建Pull Request，将你的更改合并到主项目中。
 
 ## 许可证
-本项目使用[具体许可证名称]许可证，详细信息请查看 `LICENSE` 文件。
+本项目使用 MIT 许可证，详细信息请查看 `LICENSE` 文件。
 
 ## 联系方式
 如果你在使用过程中遇到任何问题或有任何建议，欢迎通过以下方式联系我们：
@@ -95,7 +95,7 @@
 
 ## 贡献
 
-y4vyq![人物头像](https://github.com/y4vyq/web-server/raw/main/Q%E7%89%88.png)
+y4vyq![人物头像](http://www.ziyoufh.top/static/avatar.png)
 
 
 ## 许可证
