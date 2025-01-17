@@ -19,7 +19,7 @@
 - **`fonts/`**：存放字体文件，可用于在网页中使用自定义字体，提升页面的视觉效果。
 - **`img/`**：存放图片文件，为网页提供各种图片资源。
 - **`js/`**：存放JavaScript脚本文件，实现网页的交互功能，如文件上传进度显示、菜单的显示与隐藏等。
-- **`kanbanniang/`**：用于实现一个看板娘功能（需要额外后端api，参考https://github.com/fghrsh/live2d_api）
+- **`kanbanniang/`**：用于实现一个看板娘功能（需要额外后端api，参考https://github.com/fghrsh/live2d_api
 - **`robots.txt`**：规定了搜索引擎爬虫的访问权限，控制哪些页面可以被抓取，哪些页面需要被忽略。
 
 ### 模板目录（`templates`）
